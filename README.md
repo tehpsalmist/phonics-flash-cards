@@ -1,9 +1,9 @@
-[Check it out live](https://flash-card-game.now.sh)
+[Check it out live](https://phonics-flash-cards.now.sh)
 
 Spin it up locally:
 
 ```sh
-git clone $url && cd flash-card-game
+git clone $url && cd phonics-flash-cards
 npm i
 npm start
 ```

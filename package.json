@@ -1,5 +1,5 @@
 {
-  "name": "flash-card-game",
+  "name": "phonics-flash-cards",
   "version": "0.0.1",
   "main": "index.html",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/tehpsalmist/flash-card-game.git"
+    "url": "git+ssh://git@github.com/tehpsalmist/phonics-flash-cards.git"
   },
   "keywords": [
     "parcel",
@@ -20,9 +20,9 @@
   "author": "Ben Steward <bstewardcodes@gmail.com> (https://tehpsalmist.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tehpsalmist/flash-card-game/issues"
+    "url": "https://github.com/tehpsalmist/phonics-flash-cards/issues"
   },
-  "homepage": "https://github.com/tehpsalmist/flash-card-game#readme",
+  "homepage": "https://github.com/tehpsalmist/phonics-flash-cards#readme",
   "devDependencies": {
     "@types/node": "^18.11.9",
     "@types/react": "latest",
