@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM", "ES2015.Iterable"],
+    "downlevelIteration": true,
+    "types": ["node"],
+    "typeRoots": ["../node_modules/@types"],
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  }
+}

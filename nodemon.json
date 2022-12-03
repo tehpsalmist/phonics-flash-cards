@@ -1,0 +1,7 @@
+{
+  "watch": [
+    "./blendGenerator.ts"
+  ],
+  "ext": "ts",
+  "exec": "ts-node --project generator-tsconfig.json blendGenerator.ts"
+}
