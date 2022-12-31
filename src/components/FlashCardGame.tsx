@@ -15,6 +15,10 @@ export const FlashCardGame = ({
   onExit,
   ...props
 }: FlashCardGameProps) => {
+  const lowerLabel = label.toLowerCase()
+  const isLeadingBlend = lowerLabel.includes('leading')
+  const isMiddleBlend = lowerLabel.includes('middle')
+  const isEndingBlend = lowerLabel.includes('ending')
   const shuffledList = useMemo(() => shuffle(list), [list])
   const [index, setIndex] = useState(0)
   const [results, setResults] = useState({})
@@ -42,7 +46,9 @@ export const FlashCardGame = ({
       {index < shuffledList.length ? (
         <>
           <div className="text-[15vw] text-center my-auto">
+            {(isEndingBlend || isMiddleBlend) && '_'}
             {shuffledList[index].blend}
+            {(isLeadingBlend || isMiddleBlend) && '_'}
           </div>
           <div className="flex">
             <button
