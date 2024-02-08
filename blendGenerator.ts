@@ -61,10 +61,7 @@ const consonants = [
   'z',
 ]
 
-const alphaMap = alphabet.reduce(
-  (map, letter) => ({ ...map, [letter]: true }),
-  {}
-)
+const alphaMap = alphabet.reduce((map, letter) => ({ ...map, [letter]: true }), {})
 
 const extract6of12 = async () => {
   const rawText = await readFile(`./raw-data/6of12.txt`, {
@@ -88,9 +85,7 @@ const extractSimpleDictWords = async () => {
     await writeFile(
       `./words/${letter}.json`,
       JSON.stringify(
-        list
-          .map((word) => word.toLowerCase())
-          .filter((word) => !word.split('').some((l) => !alphaMap[l])),
+        list.map((word) => word.toLowerCase()).filter((word) => !word.split('').some((l) => !alphaMap[l])),
         null,
         2
       )
@@ -105,10 +100,7 @@ const collateSimpleDictAllWords = async () => {
     return list
   })
 
-  await writeFile(
-    `./words/all-words.json`,
-    JSON.stringify(collatedWords, null, 2)
-  )
+  await writeFile(`./words/all-words.json`, JSON.stringify(collatedWords, null, 2))
 }
 
 const leadingBlends = async () => {
@@ -122,10 +114,7 @@ const leadingBlends = async () => {
     }
   }
 
-  await writeFile(
-    './blends/leading-blends.json',
-    JSON.stringify(blends, null, 2)
-  )
+  await writeFile('./blends/leading-blends.json', JSON.stringify(blends, null, 2))
 }
 
 const endingBlends = async () => {
@@ -147,10 +136,7 @@ const endingBlends = async () => {
     }
   }
 
-  await writeFile(
-    './blends/ending-blends.json',
-    JSON.stringify(blends, null, 2)
-  )
+  await writeFile('./blends/ending-blends.json', JSON.stringify(blends, null, 2))
 }
 
 const middleBlends = async () => {
@@ -167,10 +153,24 @@ const middleBlends = async () => {
     }
   }
 
-  await writeFile(
-    './blends/middle-blends.json',
-    JSON.stringify(blends, null, 2)
-  )
+  await writeFile('./blends/middle-blends.json', JSON.stringify(blends, null, 2))
+}
+
+const allVowelCombos = async () => {
+  const vowelCombos = {}
+  for (const word of allWords) {
+    const mb = word.split(/[bcdfghjklmnpqrstvxz]/g).filter(Boolean)
+
+    if (mb.length) {
+      for (const combo of mb) {
+        if (combo.length > 1) {
+          vowelCombos[combo] = (vowelCombos[combo] || 0) + 1
+        }
+      }
+    }
+  }
+
+  await writeFile('./blends/vowel-combos.json', JSON.stringify(vowelCombos, null, 2))
 }
 
 // extractSimpleDictWords().then(() => collateSimpleDictAllWords())
@@ -178,3 +178,4 @@ const middleBlends = async () => {
 // endingBlends()
 // middleBlends()
 // extract6of12()
+// allVowelCombos()

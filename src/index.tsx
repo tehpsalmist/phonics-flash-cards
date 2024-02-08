@@ -11,6 +11,9 @@ import {
   middle2,
   middle3,
   middle4plus,
+  vowel2,
+  vowel3,
+  vowel4plus,
 } from './blends'
 import { FlashCardGame } from './components/FlashCardGame'
 import { QualifyBlendList } from './components/QualifyBlendList'
@@ -33,6 +36,9 @@ const listOptions = [
   { label: '2-Letter Middle Blends', list: middle2 },
   { label: '3-Letter Middle Blends', list: middle3 },
   { label: '4+-Letter Middle Blends', list: middle4plus },
+  { label: '2-Letter Vowel Combos', list: vowel2 },
+  { label: '3-Letter Vowel Combos', list: vowel3 },
+  { label: '4+-Letter Vowel Combos', list: vowel4plus },
 ]
 
 export const App = () => {
