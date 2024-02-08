@@ -1,6 +1,7 @@
 import React, { ComponentProps, useMemo, useState } from 'react'
 import { Blend } from '../blends'
 import { shuffle } from '../utils'
+import { VowelBlank } from './VowelBlank'
 
 export interface FlashCardGameProps extends ComponentProps<'div'> {
   list: Blend[]
@@ -61,9 +62,13 @@ export const FlashCardGame = ({
       {index < shuffledList.length ? (
         <>
           <div className="text-[15vw] text-center my-auto">
-            {(isEndingBlend || isMiddleBlend) && '_'}
+            {(isEndingBlend || isMiddleBlend) && (
+              <VowelBlank key={shuffledList[index].blend} />
+            )}
             {shuffledList[index].blend}
-            {(isLeadingBlend || isMiddleBlend) && '_'}
+            {(isLeadingBlend || isMiddleBlend) && (
+              <VowelBlank key={shuffledList[index].blend} />
+            )}
           </div>
           <div className="flex min-h-60">
             {competitorList.map((competitor) => (
