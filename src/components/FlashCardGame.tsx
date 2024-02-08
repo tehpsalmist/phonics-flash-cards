@@ -63,11 +63,11 @@ export const FlashCardGame = ({
         <>
           <div className="text-[15vw] text-center my-auto">
             {(isEndingBlend || isMiddleBlend) && (
-              <VowelBlank key={shuffledList[index].blend} />
+              <VowelBlank key={`start-${shuffledList[index].blend}`} />
             )}
             {shuffledList[index].blend}
             {(isLeadingBlend || isMiddleBlend) && (
-              <VowelBlank key={shuffledList[index].blend} />
+              <VowelBlank key={`end-${shuffledList[index].blend}`} />
             )}
           </div>
           <div className="flex min-h-60">
