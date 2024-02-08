@@ -53,7 +53,7 @@ export const FlashCardGame = ({
 
   return (
     <div
-      className={`${className} h-screen w-screen flex flex-col items-stretch justify-between relative`}
+      className={`${className} h-screenD w-screen flex flex-col items-stretch justify-between relative`}
       {...props}
     >
       <button className="absolute top-4 left-4" onClick={(e) => onExit()}>

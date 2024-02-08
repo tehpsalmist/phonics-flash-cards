@@ -1,32 +1,30 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  content: [
-      './src/**/*.{html,js,jsx,ts,tsx}'
-  ],
+  content: ['./src/**/*.{html,js,jsx,ts,tsx}'],
   theme: {
     extend: {
       colors: {
         primary: colors.blue,
         secondary: {
           ...colors.green,
-          100: '#dbfde4'
-        }
+          100: '#dbfde4',
+        },
       },
-      minHeight: theme => ({
-        ...theme('spacing')
+      minHeight: (theme) => ({
+        ...theme('spacing'),
       }),
-      maxHeight: theme => ({
-        ...theme('spacing')
+      maxHeight: (theme) => ({
+        ...theme('spacing'),
       }),
-      minWidth: theme => ({
-        ...theme('spacing')
+      minWidth: (theme) => ({
+        ...theme('spacing'),
       }),
-      maxWidth: theme => ({
-        ...theme('spacing')
+      maxWidth: (theme) => ({
+        ...theme('spacing'),
       }),
-      inset: theme => ({
-        ...theme('spacing')
+      inset: (theme) => ({
+        ...theme('spacing'),
       }),
       spacing: {
         36: '9rem',
@@ -41,11 +39,12 @@ module.exports = {
         '5xl': '64rem',
         '6xl': '72rem',
         '100vw': '100vw',
-        content: 'calc(100vh - 3rem)'
+        content: 'calc(100vh - 3rem)',
+        screenD: '100dvh',
       },
       boxShadow: {
-        md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 -1px 4px -1px rgba(0, 0, 0, 0.06)'
-      }
+        md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 -1px 4px -1px rgba(0, 0, 0, 0.06)',
+      },
     },
   },
   plugins: [],
