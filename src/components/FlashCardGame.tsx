@@ -10,13 +10,6 @@ export interface FlashCardGameProps extends ComponentProps<'div'> {
   onExit(): void
 }
 
-const backgrounds = {
-  emerald: 'bg-emerald-500',
-  red: 'bg-red-500',
-  orange: 'bg-orange-500',
-  teal: 'bg-teal-500',
-}
-
 const texts = {
   emerald: 'text-emerald-500',
   red: 'text-red-500',
@@ -29,14 +22,7 @@ const singlePlayerCompetition = [
   { name: 'Wrong', color: 'red' },
 ]
 
-export const FlashCardGame = ({
-  className = '',
-  list,
-  label,
-  competitors,
-  onExit,
-  ...props
-}: FlashCardGameProps) => {
+export const FlashCardGame = ({ className = '', list, label, competitors, onExit, ...props }: FlashCardGameProps) => {
   const competitorList = competitors ?? singlePlayerCompetition
   const lowerLabel = label.toLowerCase()
   const isLeadingBlend = lowerLabel.includes('leading')
@@ -45,44 +31,31 @@ export const FlashCardGame = ({
   const shuffledList = useMemo(() => shuffle(list), [list])
   const [index, setIndex] = useState(0)
   const [results, setResults] = useState(() =>
-    competitorList.reduce<Record<string, string[]>>(
-      (r, competitor) => ({ ...r, [competitor.name]: [] }),
-      {}
-    )
+    competitorList.reduce<Record<string, string[]>>((r, competitor) => ({ ...r, [competitor.name]: [] }), {})
   )
 
   return (
-    <div
-      className={`${className} h-screenD w-screen flex flex-col items-stretch justify-between relative`}
-      {...props}
-    >
+    <div className={`${className} h-screenD w-screen flex flex-col items-stretch justify-between relative`} {...props}>
       <button className="absolute top-4 left-4" onClick={(e) => onExit()}>
         ⬅ {label}
       </button>
       {index < shuffledList.length ? (
         <>
           <div className="text-[15vw] text-center my-auto">
-            {(isEndingBlend || isMiddleBlend) && (
-              <VowelBlank key={`start-${shuffledList[index].blend}`} />
-            )}
+            {(isEndingBlend || isMiddleBlend) && <VowelBlank key={`start-${shuffledList[index].blend}`} />}
             {shuffledList[index].blend}
-            {(isLeadingBlend || isMiddleBlend) && (
-              <VowelBlank key={`end-${shuffledList[index].blend}`} />
-            )}
+            {(isLeadingBlend || isMiddleBlend) && <VowelBlank key={`end-${shuffledList[index].blend}`} />}
           </div>
           <div className="flex min-h-60">
             {competitorList.map((competitor) => (
               <button
-                className={`relative w-1/2 h-60 text-white text-6xl flex-center flex-col ${
-                  backgrounds[competitor.color]
-                }`}
+                style={{ backgroundColor: competitor.color }}
+                className={`relative w-1/2 h-60 text-white text-6xl flex-center flex-col`}
                 onClick={() => {
                   setIndex((i) => i + 1)
                   setResults((r) => ({
                     ...r,
-                    [competitor.name]: r[competitor.name].concat([
-                      shuffledList[index].blend,
-                    ]),
+                    [competitor.name]: r[competitor.name].concat([shuffledList[index].blend]),
                   }))
                 }}
               >
@@ -94,13 +67,11 @@ export const FlashCardGame = ({
         </>
       ) : competitors ? (
         <>
-          <div className="my-auto text-3xl text-center">
-            {multiPlayerMessage(results)}
-          </div>
+          <div className="my-auto text-3xl text-center">{multiPlayerMessage(results)}</div>
           <div className="flex justify-evenly items-center h-60 text-6xl">
             {competitorList.map((competitor) => (
               <span className={texts[competitor.color]}>
-                {[competitor.name]}: {results[competitor.name].length}
+                {competitor.name}: {results[competitor.name].length}
               </span>
             ))}
           </div>
@@ -111,13 +82,8 @@ export const FlashCardGame = ({
             {singlePlayerMessage(results.Correct.length, shuffledList.length)}
           </div>
           <div className="flex justify-evenly items-center h-60 text-6xl">
-            <span className="text-emerald-500">
-              Correct: {results.Correct.length}
-            </span>
-            <span>
-              {Math.floor((results.Correct.length / shuffledList.length) * 100)}
-              %
-            </span>
+            <span className="text-emerald-500">Correct: {results.Correct.length}</span>
+            <span>{Math.floor((results.Correct.length / shuffledList.length) * 100)}%</span>
             <span className="text-red-500">Wrong: {results.Wrong.length}</span>
           </div>
         </>

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "index.html",
   "scripts": {
-    "start": "MODE=development parcel serve src/index.html",
+    "start": "MODE=development parcel serve src/index.html -p 1345",
     "generator": "nodemon",
     "build": "MODE=production parcel build src/index.html --no-scope-hoist"
   },
@@ -33,20 +33,24 @@
     "tailwindcss": "latest"
   },
   "dependencies": {
-    "react": "latest",
-    "react-dom": "latest"
+    "@8thday/react": "^0.8.7",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "app": "public/index.html",
   "targets": {
     "main": false,
     "app": {
       "engines": {
-        "browsers": "Chrome 70"
+        "browsers": "> 0.5%, last 2 versions"
       }
     }
   },
   "prettier": {
     "semi": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "printWidth": 120
   }
 }

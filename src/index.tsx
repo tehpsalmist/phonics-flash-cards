@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { render } from 'react-dom'
 import { PickFromBlendLists } from './components/PickFromBlendLists'
 import {
-  Blend,
   ending2,
   ending3,
   ending4plus,
@@ -15,6 +14,14 @@ import {
 } from './blends'
 import { FlashCardGame } from './components/FlashCardGame'
 import { QualifyBlendList } from './components/QualifyBlendList'
+import { Button, TextInput, Toggle, useRememberedState } from '@8thday/react'
+
+interface Competitor {
+  name: string
+  color: string
+}
+
+const MAX_PLAYERS = 4
 
 const listOptions = [
   { label: '2-Letter Leading Blends', list: leading2 },
@@ -29,34 +36,88 @@ const listOptions = [
 ]
 
 export const App = () => {
-  const [blends, setBlends] = useState<typeof listOptions[number] | null>(null)
-  const [blendsToPlay, setBlendsToPlay] = useState(blends)
+  const [blends, setBlends] = useState<(typeof listOptions)[number] | null>(null)
+  const [blendsToPlay, setBlendsToPlay] = useRememberedState('pfc-blends-to-play', blends)
+  const [singlePlayer, setSinglePlayer] = useRememberedState('pfc-single-player-mode', true)
+  const [competitors, setCompetitors] = useRememberedState<Competitor[]>('pfc-competitors', [])
 
   return (
-    <main className="flex flex-nowrap">
+    <main className="flex flex-wrap">
       {blendsToPlay ? (
         <FlashCardGame
+          competitors={singlePlayer ? undefined : competitors}
           list={blendsToPlay.list}
           label={blendsToPlay.label}
           onExit={() => setBlendsToPlay(null)}
         />
       ) : (
         <>
-          <PickFromBlendLists
-            heading="Choose a blend list"
-            options={listOptions}
-            onPick={(o) => setBlends(o)}
+          <Toggle
+            rightLabel="Single Player Mode"
+            leftLabel="Multiplayer Mode"
+            className="w-full my-6"
+            checked={singlePlayer}
+            setChecked={setSinglePlayer}
           />
+          <PickFromBlendLists heading="Choose a blend list" options={listOptions} onPick={(o) => setBlends(o)} />
           <div className="p-4 flex flex-nowrap justify-around">
             {blends && (
-              <QualifyBlendList
-                blends={blends}
-                onConfirm={(list) =>
-                  setBlendsToPlay({ label: blends.label, list })
-                }
-              />
+              <QualifyBlendList blends={blends} onConfirm={(list) => setBlendsToPlay({ label: blends.label, list })} />
             )}
           </div>
+          {!singlePlayer && (
+            <div className="p-4 flex flex-col gap-2">
+              {competitors.map((competitor, i) => (
+                <div className="border border-primary-200 p-2 rounded-md">
+                  <TextInput
+                    label="Name"
+                    collapseDescriptionArea
+                    value={competitor.name}
+                    onChange={(e) =>
+                      setCompetitors((cs) =>
+                        cs.map((c, idx) => (i === idx ? { name: e.target.value, color: c.color } : c))
+                      )
+                    }
+                  />
+                  <label>
+                    Color
+                    <input
+                      className="block mb-2"
+                      type="color"
+                      value={competitor.color}
+                      onChange={(e) =>
+                        setCompetitors((cs) =>
+                          cs.map((c, idx) => (i === idx ? { name: c.name, color: e.target.value } : c))
+                        )
+                      }
+                    />
+                  </label>
+                  <Button
+                    variant="destructive"
+                    onClick={() => setCompetitors((cmps) => cmps.filter((_, ix) => i !== ix))}
+                  >
+                    Remove Competitor
+                  </Button>
+                </div>
+              ))}
+              {competitors.length < MAX_PLAYERS && (
+                <Button
+                  onClick={() =>
+                    setCompetitors((cpts) =>
+                      cpts.concat([
+                        {
+                          name: '',
+                          color: '#ffffff',
+                        },
+                      ])
+                    )
+                  }
+                >
+                  Add Competitor
+                </Button>
+              )}
+            </div>
+          )}
         </>
       )}
     </main>

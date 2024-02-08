@@ -1,6 +1,6 @@
 import React, { ComponentProps } from 'react'
 import { Blend } from '../blends'
-import { useRememberedState } from '../hooks'
+import { useRememberedState } from '@8thday/react'
 
 export interface QualifyBlendListProps extends ComponentProps<'div'> {
   blends: { label: string; list: Blend[] }
